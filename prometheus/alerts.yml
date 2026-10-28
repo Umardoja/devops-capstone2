@@ -1,0 +1,22 @@
+groups:
+  - name: demo-api-slo
+    rules:
+      - alert: DemoAPIHighErrorRate
+        expr: sum(increase(http_requests_total{status=~"5.."}[1m])) > 3
+        for: 0s
+        labels:
+          severity: critical
+          service: demo-api
+        annotations:
+          summary: "demo-api: more than 3 server errors in 1 minute"
+          description: "The demo error drill triggered the high-error alert. This is expected during the lab."
+          runbook_url: "http://localhost:8000/runbook"
+      - alert: DemoAPIDown
+        expr: up{job="demo-api"} == 0
+        for: 20s
+        labels:
+          severity: critical
+          service: demo-api
+        annotations:
+          summary: "Prometheus cannot scrape demo-api"
+          runbook_url: "http://localhost:8000/runbook"

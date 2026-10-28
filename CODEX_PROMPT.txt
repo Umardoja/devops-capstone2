@@ -1,0 +1,16 @@
+I have a DevOps Capstone 2 submission deadline in under one hour. Work directly inside THIS repository. Do not rebuild from scratch, rewrite working files, or add unnecessary frameworks.
+
+GOAL: Run and verify the existing Docker Compose observability stack for Flask, Prometheus, Grafana, Loki, Fluent Bit, OpenTelemetry Collector and Tempo, then capture proof of alert firing, searchable logs, one traced request, and dashboard-as-code. Our instructor grades working system 50%, automation/docs 30%, demo 20%.
+
+IMMEDIATE ACTIONS:
+1. Check Docker engine and `docker compose config` for syntax. If Docker is unavailable, explain exact local prerequisite and continue static validation.
+2. Run `docker compose up -d --build`, observe `docker compose ps`, and inspect service logs. Fix only actionable boot/config errors. Keep image versions pinned and ports loopback-only.
+3. Run `python scripts/check.py`; fix any failed service and re-test. App on 8000, Grafana 3000, Prometheus 9090, Loki 3100, Tempo 3200.
+4. Run `python scripts/drill.py`. Verify that Prometheus `/alerts` shows `DemoAPIHighErrorRate` in `Firing` state, not just configured or pending. Save authentic screenshot to `screenshots/alert-firing.png` when possible.
+5. In Grafana check provisioned dashboard `http://localhost:3000/d/capstone2-overview`; save real screenshot `screenshots/dashboard.png` if possible.
+6. Check logs in Grafana Explore Loki `{service="demo-api",level="ERROR"}` and save evidence screenshot `screenshots/logs.png` if possible.
+7. Inspect a Tempo trace from the drill's printed trace ID, verify it has child spans, and save screenshot `screenshots/trace.png` if possible.
+8. Update `docs/BLAMELESS_POSTMORTEM.md` with the real drill's timestamp/results, never invented details.
+9. Run static checks or available tests, inspect untracked files and help me commit/push repo to GitHub without committing secrets.
+
+IMPORTANT: Prioritize making the stack actually run over refactoring, optional k8s, Terraform, Helm, visual redesign, or more documentation. Explain any unverified requirement honestly. If you need user action, state one exact command/action. At the end report: services status, drill outcome, logs status, trace status, evidence files, GitHub push status, and gaps.
